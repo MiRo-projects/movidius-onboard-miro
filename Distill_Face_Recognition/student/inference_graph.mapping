@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<mapping>
+	<map>
+		<framework name="student/Reshape" out_port_id="0"/>
+		<IR id="10" name="student/Reshape" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/MatMul_1" out_port_id="0"/>
+		<IR id="17" name="student/MatMul_1" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/Variable_2/read" out_port_id="0"/>
+		<IR id="11" name="student/MatMul/1_port_transpose415_const" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="student/MaxPool" out_port_id="0"/>
+		<IR id="8" name="student/MaxPool/Transpose" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/Variable_4/read" out_port_id="0"/>
+		<IR id="16" name="student/MatMul_1/1_port_transpose419_const" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="student/MatMul" out_port_id="0"/>
+		<IR id="12" name="student/MatMul" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/add" out_port_id="0"/>
+		<IR id="4" name="student/add" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/output" out_port_id="0"/>
+		<IR id="19" name="student/output" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="Placeholder" out_port_id="0"/>
+		<IR id="0" name="Placeholder" out_port_id="0"/>
+	</map>
+	<map>
+		<framework name="student/Relu_1" out_port_id="0"/>
+		<IR id="15" name="student/Relu_1" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="student/Conv2D" out_port_id="0"/>
+		<IR id="2" name="student/Conv2D" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/Variable/read" out_port_id="0"/>
+		<IR id="1" name="student/Variable/read/Output_0/Data__const" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="student/add_1" out_port_id="0"/>
+		<IR id="14" name="student/add_1" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="student/Relu" out_port_id="0"/>
+		<IR id="5" name="student/Relu" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="student/Reshape/shape" out_port_id="0"/>
+		<IR id="9" name="student/Reshape/Cast_1576_const" out_port_id="1"/>
+	</map>
+</mapping>
