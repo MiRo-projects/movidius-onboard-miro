@@ -21,4 +21,4 @@ The following command is used to run face recognition. (Argument XXXX can be 'te
 ```
 python face_recognition_with_computestick.py --model XXXX
 ```
-Note: Intel neural compute stick should be plugged in.
+Note: Intel Movidius compute stick should be plugged in.
