@@ -13,7 +13,7 @@ Open the Model Optimizer that is included with OpenVINO and type the following c
 ```
 python3 mo_tf.py --input_model inference_graph.pb --input Placeholder --input_shape [1,64,64,3]
 ```
-to convert the saved TensorFlow freeze model into Intermediate Representation(IR) for deploying on MiRo.
+to convert the saved TensorFlow freeze model into Intermediate Representation(IR) for deploying on MiRo via the Intel Movidius compute stick.
 
 The following command is used to run face recognition. (Argument XXXX can be 'teacher' or 'student' which means running teacher model or student model)
 ```
