@@ -5,7 +5,9 @@ MiRo is a robot with a biomimetic brain-based control system. In order to recogn
 ## Steps to use
 First run collect_my_faces.py, which will automatically call your computer's camera to capture your face image and save it in the faces_my folder.
 
-Next, download the LFW data as training data and unzip it into img_source. Run preprocess_other_faces.py which will automatically process the face data just downloaded, by using dlib to batch recognize the face part of the image and save it to the specified directory faces_other. The face size is 64*64.
+Next, download the LFW data as training data and unzip it into img_source:http://vis-www.cs.umass.edu/lfw/lfw.tgz
+
+Run preprocess_other_faces.py which will automatically process the face data just downloaded, by using dlib to batch recognize the face part of the image and save it to the specified directory faces_other. The face size is 64*64.
 
 Run train_model.py for model training. Wait for the training to finish and the student and teacher models will appear in their respective folders.
 
