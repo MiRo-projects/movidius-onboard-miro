@@ -150,7 +150,7 @@ def train():
         summary_writer = tf.summary.FileWriter('./tmp', graph=tf.get_default_graph())
         saver1 = tf.train.Saver(var_teacher)
         saver2 = tf.train.Saver(var_student)
-
+        pre_loss = 0
         for n in range(10):
             #100 pictures each time
             for i in range(num_batch):
@@ -160,20 +160,18 @@ def train():
                                             feed_dict={x: batch_x, y_: batch_y})
                 summary_writer.add_summary(summary, n*num_batch+i)
                 print("step:%d,  loss:%g" % (n*num_batch+i, loss))
-
-                if (n*num_batch+i) % 100 == 0:
+                if pre_loss-loss < 0.01 and n >= 2:
                     acc = accuracy_teacher.eval({x: test_x, y_: test_y})
-                    print("step:%d,  acc:%g" % (n*num_batch+i, acc))
-                    # stop when acc is more than 0.98
-                    if acc > 0.98 and n >= 1:
-                        saver1.save(sess, './teacher/train_faces.model', global_step=n*num_batch+i)
-                        frozen = tf.graph_util.convert_variables_to_constants(sess, sess.graph_def, ["teacher/output"])
-                        graph_io.write_graph(frozen, './teacher', 'inference_graph.pb', as_text=False)
-                        break
-            if acc > 0.98 and n >= 1:
+                    print(acc)
+                    saver1.save(sess, './teacher/train_faces.model', global_step=n*num_batch+i)
+                    frozen = tf.graph_util.convert_variables_to_constants(sess, sess.graph_def, ["teacher/output"])
+                    graph_io.write_graph(frozen, './teacher', 'inference_graph.pb', as_text=False)
+                    break
+                pre_loss = loss
+            if pre_loss-loss < 0.01 and n >= 2:
                 break
             
-
+        pre_loss = 0
         for n in range(10):
             for i in range(num_batch):
                 batch_x = train_x[i*batch_size: (i+1)*batch_size]          
@@ -182,17 +180,14 @@ def train():
                                             feed_dict={x: batch_x, y_: batch_y})
                 summary_writer.add_summary(summary, n*num_batch+i)
                 print("step:%d,  loss:%g" % (n*num_batch+i, loss))
-
-                if (n*num_batch+i) % 100 == 0:
+                if pre_loss-loss < 0.01 and n >= 2:
                     acc = accuracy_student.eval({x: test_x, y_: test_y})
-                    print("step:%d,  acc:%g" % (n*num_batch+i, acc))
-                    # stop when acc is more than 0.98
-                    if acc > 0.98 and n >= 1:
-                        saver2.save(sess, './student/train_faces.model', global_step=n*num_batch+i)
-                        frozen = tf.graph_util.convert_variables_to_constants(sess, sess.graph_def, ["student/output"])
-                        graph_io.write_graph(frozen, './student', 'inference_graph.pb', as_text=False)
-                        sys.exit(0)
-
+                    print(acc)
+                    saver2.save(sess, './student/train_faces.model', global_step=n*num_batch+i)
+                    frozen = tf.graph_util.convert_variables_to_constants(sess, sess.graph_def, ["student/output"])
+                    graph_io.write_graph(frozen, './student', 'inference_graph.pb', as_text=False)
+                    sys.exit(0)
+                pre_loss = loss
 
 if __name__ == '__main__':
 
@@ -203,7 +198,7 @@ if __name__ == '__main__':
     labs = np.array([[0, 1] if lab == faces_my_path else [1, 0] for lab in labs])  #Label: [0,1] means it's my face, [1,0] means other faces
     #Randomly divide the test set and the training set
 
-    train_x_1, test_x_1, train_y, test_y = train_test_split(imgs, labs, test_size=0.05, random_state=random.randint(0, 100))
+    train_x_1, test_x_1, train_y, test_y = train_test_split(imgs, labs, test_size=0.1, random_state=random.randint(0, 100))
     train_x_2 = train_x_1.reshape(train_x_1.shape[0], size, size, 3)        
     test_x_2 = test_x_1.reshape(test_x_1.shape[0], size, size, 3)
 
